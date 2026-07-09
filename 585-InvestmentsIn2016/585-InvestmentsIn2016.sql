@@ -1,0 +1,16 @@
+-- Last updated: 7/9/2026, 3:07:16 PM
+SELECT 
+    ROUND(SUM(tiv_2016), 2) AS tiv_2016
+FROM Insurance
+WHERE (lat, lon) IN (
+    SELECT lat, lon
+    FROM Insurance
+    GROUP BY lat, lon
+    HAVING COUNT(*) = 1
+)
+AND tiv_2015 IN (
+    SELECT tiv_2015
+    FROM Insurance
+    GROUP BY tiv_2015
+    HAVING COUNT(*) > 1
+);
